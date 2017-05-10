@@ -11,6 +11,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,6 +51,16 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "You have no saved notes", Toast.LENGTH_SHORT).show();
             return;
         } else {
+            Collections.sort(notes, new Comparator<Note>() {
+                @Override
+                public int compare(Note n1, Note n2) {
+                    if(n2.getDateTime() > n2.getDateTime()) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+                }
+            });
             NoteAdapter na = new NoteAdapter(this, R.layout.note, notes);
             listViewNotes.setAdapter(na);
 
