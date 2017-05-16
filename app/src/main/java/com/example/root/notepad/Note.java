@@ -23,7 +23,7 @@ public class Note implements Serializable{
         this.title = title;
         this.content = content;
     }
-
+    //setters
     public void setDateTime(long dateTime) {
         this.dateTime = dateTime;
     }
@@ -35,6 +35,8 @@ public class Note implements Serializable{
     public void setContent(String content) {
         this.content = content;
     }
+
+    //getters
 
     public long getDateTime() {
         return dateTime;
@@ -48,7 +50,7 @@ public class Note implements Serializable{
         return content;
     }
 
-    public String getDateTimeFormatted(Context context) {
+    public String getDateTimeFormatted(Context context) { //function that returns formated date
         Locale locale;
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
             locale = context.getResources().getConfiguration().getLocales().get(0);

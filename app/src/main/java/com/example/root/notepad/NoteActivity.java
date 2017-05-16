@@ -20,7 +20,7 @@ public class NoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
-
+        //load note to intent
         title = (EditText) findViewById(R.id.note_title);
         content = (EditText) findViewById(R.id.note_content);
         noteFileName = getIntent().getStringExtra("NOTE_FILE");
@@ -36,7 +36,7 @@ public class NoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_note_new, menu);
+        getMenuInflater().inflate(R.menu.menu_note_new, menu); // create menu
         return true;
     }
 
@@ -54,6 +54,30 @@ public class NoteActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed() { // handling back button
+        if(!title.getText().toString().trim().isEmpty() || !content.getText().toString().trim().isEmpty()) {
+            // Dialog alert if you are sure
+            AlertDialog.Builder backDialog = new AlertDialog.Builder(this)
+                    .setTitle("Leaving")
+                    .setMessage("Are you sure to leave?")
+                    .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("no", null)
+                    .setCancelable(false);
+
+            backDialog.show();
+
+        }
+        else {
+            finish();
+        }
+    }
+
 
     private void saveNote() {
         Note note;
@@ -61,10 +85,10 @@ public class NoteActivity extends AppCompatActivity {
             Toast.makeText(this, " please enter a title and a content", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(loadedNote == null) {
+        if(loadedNote == null) { // if new, add
             note = new Note(System.currentTimeMillis(), title.getText().toString(),
                     content.getText().toString());
-        } else {
+        } else { //if not new, override
             note = new Note(loadedNote.getDateTime(), title.getText().toString(),
                     content.getText().toString());
         }
@@ -80,8 +104,28 @@ public class NoteActivity extends AppCompatActivity {
 
     private void deleteNote() {
         if(loadedNote == null) {
-            finish();
+            if(!title.getText().toString().trim().isEmpty() || !content.getText().toString().trim().isEmpty()) {
+                // Dialog alert if you are sure
+                AlertDialog.Builder deleteDialog = new AlertDialog.Builder(this)
+                        .setTitle("Deleting")
+                        .setMessage("Are you sure to leave?")
+                        .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("no", null)
+                        .setCancelable(false);
+
+                deleteDialog.show();
+
+            }
+            else {
+                finish();
+            }
         } else {
+            // Dialog alert if you are sure
             AlertDialog.Builder dialog = new AlertDialog.Builder(this)
                     .setTitle("Deleting")
                     .setMessage("You are about to delete " + title.getText().toString() + ", are you sure?")

@@ -21,13 +21,13 @@ public class Utilities {
     public static final String EXTENSION = ".bin";
 
     public static boolean saveNotes(Context context, Note note) {
-        String filaName = String.valueOf(note.getDateTime()) + EXTENSION;
+        String fileName = String.valueOf(note.getDateTime()) + EXTENSION;
 
         FileOutputStream fos;
         ObjectOutputStream oos;
-
+        //write to file
         try {
-            fos = context.openFileOutput(filaName, context.MODE_PRIVATE);
+            fos = context.openFileOutput(fileName, context.MODE_PRIVATE);
             oos = new ObjectOutputStream(fos);
             oos.writeObject(note);
             oos.close();
@@ -47,7 +47,7 @@ public class Utilities {
         ArrayList<String> noteFiles = new ArrayList<>();
         for (String file : filesDir.list()) {
             if (file.endsWith(EXTENSION)) {
-                noteFiles.add(file);
+                noteFiles.add(file); //add file to array
             }
         }
         FileInputStream fis;
@@ -58,7 +58,7 @@ public class Utilities {
                 fis = context.openFileInput(noteFiles.get(i));
                 ois = new ObjectInputStream(fis);
 
-                notes.add((Note)ois.readObject());
+                notes.add((Note)ois.readObject()); //andd notes to array 
                 fis.close();
                 ois.close();
             } catch (IOException | ClassNotFoundException e ) {

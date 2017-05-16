@@ -27,12 +27,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu); //Inflate a menu hierarchy from the specified XML resource
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {  //Menu with add button
         switch (item.getItemId()) {
             case R.id.action_main_new:
                 //we open NoteActivity to create new one
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Collections.sort(notes, new Comparator<Note>() {
                 @Override
-                public int compare(Note n1, Note n2) {
+                public int compare(Note n1, Note n2) { //sorting notes by date
                     if(n2.getDateTime() > n2.getDateTime()) {
                         return 1;
                     } else {
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
             listViewNotes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int position, long lid) {
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long lid) { // select one note from list
                     String fileName = ((Note)listViewNotes.getItemAtPosition(position)).getDateTime() +
                             Utilities.EXTENSION;
                     Intent viewNote = new Intent(getApplicationContext(), NoteActivity.class);
